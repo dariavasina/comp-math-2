@@ -5,7 +5,7 @@ public class Function1 extends Function{
     public Function1() {
         super(new Solution[]{
                 new Solution(-4.448, 0, -3d, false, true),
-                new Solution(0.127d, -1d, 2d, true, true),
+                new Solution(0.127d, -1d, 1d, true, true),
                 new Solution(2.616d, 1.5d, 0, true, false)
         });
     }

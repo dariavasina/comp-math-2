@@ -2,6 +2,9 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -18,15 +21,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="762.0" prefWidth="950.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.compmath2javafx.HelloController">
+<VBox alignment="CENTER" prefHeight="762.0" prefWidth="950.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.compmath2javafx.MainController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-   <TabPane prefHeight="450.0" prefWidth="658.0" tabClosingPolicy="UNAVAILABLE">
+   <TabPane prefHeight="550.0" prefWidth="910.0" tabClosingPolicy="UNAVAILABLE">
      <tabs>
        <Tab fx:id="EquationTab" text="Equation">
          <content>
-           <AnchorPane fx:id="EquationPane" maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="910.0">
+           <AnchorPane fx:id="EquationPane" maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="910.0">
                   <children>
                      <Label fx:id="LeftBoundaryText" layoutX="21.0" layoutY="193.0" text="Left boundary:" />
                      <Label fx:id="RightBoundaryText" layoutX="17.0" layoutY="241.0" text="Right boundary:" />
@@ -41,15 +44,15 @@
                         <image>
                            <Image url="@../../../img/function2.jpg" />
                         </image></ImageView>
-                      <Button fx:id="SolveButton" layoutX="253.0" layoutY="379.0" onAction="#onHelloButtonClick" text="Solve" />
+                      <Button fx:id="SolveButton" layoutX="233.0" layoutY="448.0" onAction="#onSolveEquationButtonClick" text="Solve" />
                      <ImageView fitHeight="64.0" fitWidth="158.0" layoutX="14.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                            <Image url="@../../../img/function3.jpg" />
                         </image>
                      </ImageView>
-                     <TextField fx:id="LeftBoundaryField" layoutX="126.0" layoutY="189.0" />
-                     <TextField fx:id="RightBoundaryField" layoutX="127.0" layoutY="237.0" />
-                     <TextField fx:id="AccuracyField" layoutX="128.0" layoutY="284.0" />
+                     <TextField fx:id="LeftBoundaryField" layoutX="126.0" layoutY="189.0" prefHeight="26.0" prefWidth="90.0" />
+                     <TextField fx:id="RightBoundaryField" layoutX="127.0" layoutY="237.0" prefHeight="26.0" prefWidth="90.0" />
+                     <TextField fx:id="AccuracyField" layoutX="128.0" layoutY="284.0" prefHeight="26.0" prefWidth="90.0" />
                      <ComboBox fx:id="MethodComboBox" layoutX="317.0" layoutY="228.0" prefWidth="150.0" />
                      <Group fx:id="FunctionButtonGroup" layoutX="359.0" layoutY="28.0">
                         <children>
@@ -62,8 +65,8 @@
                            <RadioButton fx:id="Function3Button" layoutX="1.0" layoutY="102.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="83.0" text="Function 3" toggleGroup="$functions" />
                         </children>
                      </Group>
-                     <Pane fx:id="FunctionPane" layoutX="540.0" layoutY="36.0" prefHeight="306.0" prefWidth="341.0" />
-                     <Label fx:id="ErrorLabel" layoutX="4.0" layoutY="325.0" prefHeight="43.0" prefWidth="799.0" textFill="#d90202">
+                     <Pane fx:id="FunctionPane" layoutX="538.0" layoutY="14.0" prefHeight="306.0" prefWidth="341.0" />
+                     <Label fx:id="ErrorLabel" layoutX="17.0" layoutY="329.0" prefHeight="107.0" prefWidth="506.0" textFill="#d90202">
                         <font>
                            <Font name="System Bold" size="12.0" />
                         </font>
@@ -74,12 +77,48 @@
        </Tab>
        <Tab text="System of equations">
          <content>
-           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                     <TextField fx:id="SystemAccuracyField" layoutX="115.0" layoutY="252.0" prefHeight="26.0" prefWidth="90.0" />
+                     <TextField fx:id="YField" layoutX="192.0" layoutY="194.0" prefHeight="26.0" prefWidth="76.0" />
+                     <TextField fx:id="XField" layoutX="55.0" layoutY="194.0" prefHeight="26.0" prefWidth="73.0" />
+                     <ImageView fx:id="System1Image" fitHeight="63.0" fitWidth="206.0" layoutX="7.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../img/system1.jpg" />
+                        </image>
+                     </ImageView>
+                     <RadioButton fx:id="System1Button" layoutX="277.0" layoutY="31.0" mnemonicParsing="false" text="System 1">
+                        <toggleGroup>
+                           <ToggleGroup fx:id="systems" />
+                        </toggleGroup>
+                     </RadioButton>
+                     <RadioButton fx:id="System2Button" layoutX="277.0" layoutY="89.0" mnemonicParsing="false" text="System 2" toggleGroup="$systems" />
+                     <Label layoutX="93.0" layoutY="155.0" text="Initial approximation:" />
+                     <Label layoutX="31.0" layoutY="256.0" text="Accuracy" />
+                     <Label layoutX="148.0" layoutY="299.0" text="Method" />
+                     <ComboBox fx:id="SystemMethodCombobox" layoutX="94.0" layoutY="339.0" onAction="#onSystemSolveButtonClick" prefWidth="150.0" />
+                     <Button fx:id="SystemSolveButton" layoutX="147.0" layoutY="382.0" mnemonicParsing="false" onAction="#onSystemSolveButtonClick" text="Solve" />
+                     <Label fx:id="SystemErrorLabel" layoutX="401.0" layoutY="366.0" prefHeight="82.0" prefWidth="494.0" textFill="#d90202">
+                        <font>
+                           <Font name="System Bold" size="12.0" />
+                        </font>
+                     </Label>
+                     <Label layoutX="28.0" layoutY="197.0" text="x" />
+                     <Label layoutX="169.0" layoutY="197.0" text="y" />
+                     <LineChart fx:id="chart" layoutX="499.0" layoutY="30.0" prefHeight="334.0" prefWidth="370.0">
+                       <xAxis>
+                         <CategoryAxis side="BOTTOM" />
+                       </xAxis>
+                       <yAxis>
+                         <NumberAxis side="LEFT" />
+                       </yAxis>
+                     </LineChart>
+                  </children></AnchorPane>
          </content>
        </Tab>
      </tabs>
    </TabPane>
-   <TableView fx:id="ResultTable" prefHeight="178.0" prefWidth="910.0" />
+   <TableView fx:id="ResultTable" prefHeight="200.0" prefWidth="910.0" />
 
     <Label fx:id="welcomeText" />
 </VBox>
